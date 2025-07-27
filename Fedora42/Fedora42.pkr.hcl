@@ -13,6 +13,7 @@
      - https://joshrnoll.com/deploying-fedora-servers-with-cloudinit-on-proxmox/
      - https://www.youtube.com/watch?v=1nf3WOEFq1Y
      - https://www.youtube.com/watch?v=dvyeoDBUtsU
+     - https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox/latest/components/builder/iso
 
    Original the intention was to provide (automation)templates in a 
    comfortable way. - Which is the reason, that all variables will get their
