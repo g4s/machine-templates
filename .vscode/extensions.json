@@ -2,6 +2,13 @@
     "recommendations": [
         "jetpack-io.devbox",
         "4ops.packer",
-        "sztheory.vscode-packer-powertools"
+        "sztheory.vscode-packer-powertools",
+        "ms-vscode-remote.remote-wsl",
+        "gruntfuggly.todo-tree",
+        "aquasecurityofficial.trivy-vulnerability-scanner",
+        "elagil.pre-commit-helper",
+        "editorconfig.editorconfig",
+        "ms-azuretools.vscode-containers",
+        "dreamcatcher45.podmanager"
     ]
 }

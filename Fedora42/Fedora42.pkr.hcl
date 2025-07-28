@@ -21,10 +21,13 @@
 */
 packer {
   required_plugins {
-    name = {
+    proxmox = {
       version = "~> 1"
       source  = "github.com/hashicorp/proxmox"
-    }
+    },
+    pytest = [
+        source = ""
+    ]
   }
 }
 

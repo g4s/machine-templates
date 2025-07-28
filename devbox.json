@@ -1,0 +1,25 @@
+{
+    "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.2/.schema/devbox.schema.json",
+    "packages": [
+        "shellcheck@latest",
+        "ripgrep@latest",
+        "curl@latest",
+        "direnv@latest",
+        "trivy@latest",
+        "packer@latest",
+        "pre-commit@latest",
+        "python3",
+        "python3-pip"
+    ],
+    "env": {},
+    "shell": {
+        "init_hook": [
+            "direnv allow",
+            "pip3 install --upgrade pip > /dev/null",
+            "pip3 install --upgrade pytest-testinfra > /dev/null",
+            "pip3 install --upgrade python-gilt > /dev/null",
+            "gilt overlay"
+        ],
+        "scripts": {}
+    }
+}
