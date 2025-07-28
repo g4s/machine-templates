@@ -22,11 +22,12 @@
 packer {
   required_plugins {
     proxmox = {
-      version = "~> 1"
-      source  = "github.com/hashicorp/proxmox"
+      version            = "~> 1"
+      source             = "github.com/hashicorp/proxmox"
     },
-    pytest = [
-        source = ""
+    testinfra = [
+        version          = "~> 1.5.8"
+        source           = "github.com/mschuchard/testinfra"
     ]
   }
 }
@@ -150,5 +151,18 @@ build {
     provisioner "shell" {
         only   = [ "source.proxmox.fedora42-base" ]
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
+    }
+
+    // adding image tests
+    provisioner "testinfra" {
+        only = [ "source.proxmox.fedora42-base" ]
+        sudo = false
+        test_files = [ "${path.root}/test-proxmox.py" ]
+    }
+
+    provisioner "testinfra" {
+        only = [ "source.qemu.fedora42-base" ]
+        sudo = false
+        test_files = [ "${path.root}/test-qemu" ] 
     }
 }
