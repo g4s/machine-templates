@@ -1,0 +1,59 @@
+---
+
+context_parser: pypyr.parser.keys
+steps:
+- name: pypyr.steps.shell
+  in:
+    cmd:
+    - packer init Fedora42.pkr.hcl
+
+help:
+- name: pypyr.steps.shell
+  comment: show reademe file
+  in:
+    cmd:
+    - gum pager < README.md
+
+proxmox:
+- name: pypyr.parser.envget
+  in:
+    envget:
+    - env: API_URI
+      key: pve_endpoint
+    - env: API_TOKEN_ID
+      key: pve_user
+    - env: PVE_NODE
+      key: pve_node
+
+- name: pypyr.steps.echo
+  in:
+    echoMe: |
+      selected pipeline: proxmox template build
+
+      collected information about Proxmox datacenter:
+      +----------------
+      | PVE API endpoint: {pve_endpoint}
+      | PVE API user:     {pve_user}
+      | PVE node:         {pve_node}
+      +----------------
+
+      selected image profile: Fedora 42
+      cloudinit enabled image
+      auto-provisioning with ansible after vm boot.
+
+- name: pypyr.steps.shell
+  comment: build proxmox template
+  in:
+    cmd:
+      run:
+      - packer build -only=proxmox
+      save: True
+      stdout: ./packer.log
+      append: False
+
+qemu:
+- name: pypyr.steps.shell
+  comment: build KVM machine
+  in:
+    cmd:
+    - packer build -only=qemu
