@@ -157,12 +157,18 @@ build {
     provisioner "testinfra" {
         only = [ "source.proxmox.fedora42-base" ]
         sudo = false
-        test_files = [ "${path.root}/test-proxmox.py" ]
+        test_files = [ 
+            "${path.root}/tests/test-general.py",
+            "${path.root}/tests/test-proxmox.py" 
+            ]
     }
 
     provisioner "testinfra" {
         only = [ "source.qemu.fedora42-base" ]
         sudo = false
-        test_files = [ "${path.root}/test-qemu" ] 
+        test_files = [ 
+            "${path.root}/tests/test-general.py",
+            "${path.root}/tests/test-qemu" 
+            ] 
     }
 }

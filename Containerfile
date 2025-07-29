@@ -14,6 +14,7 @@ RUN dnf install -y packer
 RUN dnf install -y git
 RUN dnf install -y python3 python3-pip
 RUN dnf install -y jq
+RUN pip3 install --upgrade pytest-testinfra
 
 COPY assets/start.sh /start.sh
 
