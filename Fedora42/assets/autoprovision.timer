@@ -1,0 +1,9 @@
+[Unit]
+Description=autostart autoprovision with ansible
+
+[Timer]
+OnBootSec=30s
+Unit=autoprovision.service
+
+[Install]
+WantedBy=multi-user.target default.target

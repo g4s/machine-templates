@@ -124,12 +124,11 @@ build {
         "source.qemu.fedora42-base"
         ]
 
-    // provision vm with proxmox specifica
     provisioner "shell" {
-        only   = ["source.proxmox.fedora42-base"]
         inline = [
             "sudo rm /etc/ssh/ssh_host_*",
             "sudo truncate -s 0 /etc/machine-id",
+            "sudo useradd -G wheel provisioner",
             "sudo dnf update -y",
             "sudo dnf install -y qemu-guest-agent",
             "sudo dnf install -y ansible",
@@ -139,6 +138,7 @@ build {
         ]
     }
 
+    // prepare cloudcofig on proxmox
     provisioner "shell" {
         only = [ "source.proxmox.fedora42-base" ]
         inline = [
@@ -148,7 +148,7 @@ build {
             "sudo rm -f /etc/cloud/"
         ]
     }
-
+ 
     provisioner "file" {
         only        = ["source.proxmox.fedora42-base"]
         source      = "files/99-pve.cfg"
@@ -173,8 +173,26 @@ build {
     }
 
     provisioner "file" {
+        source           = "assets/autoprovision.timer"
+        destination      = "/etc/systemd/system/autoprovision.timer"
+    }
+
+    provisioner "file" {
         source           = "assets/autoprovision.sh"
         destination      = "/usr/bin/autoprovision"
+    }
+
+    provisioner "shell" {
+        inline = [
+            "chmod 0700 /usr/bin/autoprovision"
+            ]
+    }
+
+    provisioner "shell" {
+        inline = [
+            "systemctl daemon-reload",
+            "systemctl enable --now autoprovision.timer"
+        ]
     }
 
     // adding image tests

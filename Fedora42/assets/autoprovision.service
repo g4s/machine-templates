@@ -1,0 +1,9 @@
+[Unit]
+Description=perform provision tasks
+ConditionPathExists=/auto-provision
+
+[Service]
+ExecStart=/usr/bin/autoprovision
+
+[Install]
+WantedBy=multi-user.target default.target
