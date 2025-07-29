@@ -132,6 +132,7 @@ build {
             "sudo truncate -s 0 /etc/machine-id",
             "sudo dnf update -y",
             "sudo dnf install -y qemu-guest-agent",
+            "sudo dnf install -y ansible",
             "sudo dnf autoremove -y",
             "sudo dnf clean all",
             "sudo sync"
@@ -159,6 +160,23 @@ build {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
     }
 
+    // ensure ansible autp provisioning is present on machine
+    provisioner "shell" {
+        inline = [ 
+            "touch /auto-provision"
+        ]
+    }
+
+    provisioner "file" {
+        source           = "assets/autoprovision.service"
+        destination      = "/etc/systemd/system/autprovision.service"
+    }
+
+    provisioner "file" {
+        source           = "assets/autoprovision.sh"
+        destination      = "/usr/bin/autoprovision"
+    }
+
     // adding image tests
     provisioner "testinfra" {
         only = [ "source.proxmox.fedora42-base" ]
@@ -174,7 +192,7 @@ build {
         sudo = false
         test_files = [ 
             "${path.root}/tests/test-general.py",
-            "${path.root}/tests/test-qemu" 
+            "${path.root}/tests/test-qemu.py" 
             ] 
     }
 }
