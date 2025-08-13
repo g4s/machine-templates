@@ -10,10 +10,21 @@ root-ssh-keys = [
     "{{ key }}"
     {% end %}
     ]
+reboot-on-error = true
 
 [network]
+source = "from-dhcp"
 
 [disk-setup]
+filesystem = "ext4"
+lvm.swapsize = {{ pve_ramsize * 2.5 }}
+lvm.maxvz = 0
+disk-list = [
+    {% for disk in pve_boot_disks %}
+    "{{ disk }},"
+    {% end %}
+    ]
+
 
 [post-installation-webhook]
 url = "{{ pve_webhook }}"
