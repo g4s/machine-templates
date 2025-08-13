@@ -19,6 +19,7 @@ source = "from-dhcp"
 filesystem = "ext4"
 lvm.swapsize = {{ pve_ramsize * 2.5 }}
 lvm.maxvz = 0
+lvm.hdsize = {{ pve_boot_disk_size - (pve_boot_disk_size * 0.25) }}
 disk-list = [
     {% for disk in pve_boot_disks %}
     "{{ disk }},"
