@@ -1,7 +1,7 @@
 [global]
 keyboard="de"
 country="de"
-fqdn="pveauto.install"
+fqdn="{{ pve_fqdn | default('pveauto.install') }}"
 mailto="{{ pve_mailo | default('root@localhost') }}
 timezone="{{ pve_timezone | default('Europe/Berlin') }}"
 root-password = "{{ pve_rootpw }}"
