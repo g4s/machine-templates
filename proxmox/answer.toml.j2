@@ -10,3 +10,15 @@ root-ssh-keys = [
     "{{ key }}"
     {% end %}
     ]
+
+[network]
+
+[disk-setup]
+
+[post-installation-webhook]
+url = "{{ pve_webhook }}"
+cert-fingerprint = "{{ pve_cert_fingerprint }}"
+
+[first-boot]
+source = "from-iso"
+ordering = "before-webhook"
