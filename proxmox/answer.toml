@@ -1,0 +1,5 @@
+[global]
+keyboard="de"
+country="de"
+fqdn="pveauto.install"
+mailto="{{ pve_mailo | default()}}
