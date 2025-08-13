@@ -2,4 +2,11 @@
 keyboard="de"
 country="de"
 fqdn="pveauto.install"
-mailto="{{ pve_mailo | default()}}
+mailto="{{ pve_mailo | default('root@localhost') }}
+timezone="{{ pve_timezone | default('Europe/Berlin') }}"
+root-password = "{{ pve_rootpw }}"
+root-ssh-keys = [
+    {% for key in pve_ssh_keys %}
+    "{{ key }}"
+    {% end %}
+    ]
